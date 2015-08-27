@@ -60,7 +60,10 @@ func syncMinePlugins() {
 
 		pluginDirs = resp.Plugins
 		timestamp = resp.Timestamp
-
+		//pluginDirs = append(pluginDirs, "lain")
+		//log.Println("**************************come in dir***********************", pluginDirs)
+		//add func to download the plugins with update
+		CheckPluginUpdate(pluginDirs, duration)
 		if g.Config().Debug {
 			log.Println(&resp)
 		}
