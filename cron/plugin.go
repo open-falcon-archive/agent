@@ -33,7 +33,8 @@ func syncMinePlugins() {
 	)
 
 	duration := time.Duration(g.Config().Heartbeat.Interval) * time.Second
-
+	protocol := g.Config().Plugin.Protocol
+	log.Println("the plugin's update protocol is:", protocol)
 	for {
 	REST:
 		time.Sleep(duration)
@@ -60,7 +61,6 @@ func syncMinePlugins() {
 
 		pluginDirs = resp.Plugins
 		timestamp = resp.Timestamp
-
 		if g.Config().Debug {
 			log.Println(&resp)
 		}
@@ -68,7 +68,10 @@ func syncMinePlugins() {
 		if len(pluginDirs) == 0 {
 			plugins.ClearAllPlugins()
 		}
-
+		//download the plugins that has updated with http
+		if protocol == "http" {
+			CheckPluginUpdate(pluginDirs, duration)
+		}
 		desiredAll := make(map[string]*plugins.Plugin)
 
 		for _, p := range pluginDirs {

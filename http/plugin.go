@@ -15,7 +15,12 @@ func configPluginRoutes() {
 			w.Write([]byte("plugin not enabled"))
 			return
 		}
-
+		//if the protocol is not git，return directly
+		protocol := g.Config().Plugin.Protocol
+		if protocol != "git" {
+			w.Write([]byte("the protocol is not git so can't update with http api."))
+			return
+		}
 		dir := g.Config().Plugin.Dir
 		parentDir := file.Dir(dir)
 		file.InsureDir(parentDir)
@@ -31,7 +36,7 @@ func configPluginRoutes() {
 			}
 		} else {
 			// git clone
-			cmd := exec.Command("git", "clone", g.Config().Plugin.Git, file.Basename(dir))
+			cmd := exec.Command("git", "clone", g.Config().Plugin.Uri, file.Basename(dir))
 			cmd.Dir = parentDir
 			err := cmd.Run()
 			if err != nil {
