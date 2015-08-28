@@ -115,7 +115,7 @@ func ValidateFileMd5(md5file string) bool {
 
 func TarPackage(plugin_name string, dstdir string) bool {
 	tgzfile := filepath.Join("./tmp", plugin_name+".tar.gz")
-	srcplugin := filepath.Join("./plugins", plugin_name)
+	srcplugin := filepath.Join(dstdir, plugin_name)
 	RmDir(srcplugin)
 	shell := "tar -zxf " + tgzfile + " -C " + dstdir
 	err := ExeCmd(shell)
@@ -166,8 +166,9 @@ func CheckPluginUpdate(plugins []string, cycle time.Duration) {
 			continue
 		}
 		//decompress package
-		file.InsureDir("./plugins")
-		if ok := TarPackage(plugin, "./plugins"); !ok {
+		plugin_dir := g.Config().Plugin.Dir
+		file.InsureDir(plugin_dir)
+		if ok := TarPackage(plugin, plugin_dir); !ok {
 			continue
 		}
 		//update tmp md5file to real md5file
