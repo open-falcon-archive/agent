@@ -110,5 +110,20 @@ func PluginRun(plugin *Plugin) {
 		return
 	}
 
+
+    // fill in fields
+    sec := plugin.Cycle
+    now := time.Now().Unix()
+    hostname, err := g.Hostname()
+    if err != nil {
+        hostname = ""
+    }
+
+    for j := 0; j < len(metrics); j++ {
+        metrics[j].Step = int64(sec)
+        metrics[j].Endpoint = hostname
+        metrics[j].Timestamp = now
+    }
+
 	g.SendToTransfer(metrics)
 }
