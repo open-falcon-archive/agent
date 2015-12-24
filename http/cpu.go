@@ -3,7 +3,7 @@ package http
 import (
 	"fmt"
 	"github.com/open-falcon/agent/funcs"
-	"github.com/toolkits/nux"
+	"github.com/shwinpiocess/nux"
 	"net/http"
 	"runtime"
 )

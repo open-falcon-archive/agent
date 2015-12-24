@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"github.com/open-falcon/agent/g"
 	"github.com/open-falcon/common/model"
-	"github.com/toolkits/nux"
+	"github.com/shwinpiocess/nux"
 	"github.com/toolkits/slice"
 	"log"
 )

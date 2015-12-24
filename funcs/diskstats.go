@@ -3,7 +3,7 @@ package funcs
 import (
 	"fmt"
 	"github.com/open-falcon/common/model"
-	"github.com/toolkits/nux"
+	"github.com/shwinpiocess/nux"
 	"log"
 	"strings"
 	"sync"
