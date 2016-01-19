@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"log"
 	"os"
+	"strings"
 	"sync"
 
 	"github.com/toolkits/file"
@@ -74,6 +75,10 @@ func Hostname() (string, error) {
 	if err != nil {
 		log.Println("ERROR: os.Hostname() fail", err)
 	}
+	// hostname -s
+	// -s, --short
+	// Display the short host name. This is the host name cut at the first dot.
+	hostname = strings.Split(hostname, ".")[0]
 	return hostname, err
 }
 
