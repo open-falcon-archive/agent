@@ -29,7 +29,7 @@
         "backdoor": false
     },
     "collector": {
-        "ifacePrefix": ["eth", "em", "bond"]
+        "ifacePrefix": ["eth", "em", "bond", "enp"]
     },
     "ignore": {
         "cpu.busy": true,
