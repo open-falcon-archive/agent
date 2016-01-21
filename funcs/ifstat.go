@@ -20,7 +20,7 @@ func CoreNetMetrics(ifacePrefix []string) []*model.MetricValue {
 	}
 
 	cnt := len(netIfs)
-	ret := make([]*model.MetricValue, cnt*20)
+	ret := make([]*model.MetricValue, cnt*20+1+1)
 
 	for idx, netIf := range netIfs {
 		iface := "iface=" + netIf.Iface
@@ -45,5 +45,16 @@ func CoreNetMetrics(ifacePrefix []string) []*model.MetricValue {
 		ret[idx*20+18] = CounterValue("net.if.total.errors", netIf.TotalErrors, iface)
 		ret[idx*20+19] = CounterValue("net.if.total.dropped", netIf.TotalDropped, iface)
 	}
+
+	inTotalBytes := int64(0)
+	outTotalBytes := int64(0)
+	for _, netIf := range netIfs {
+		inTotalBytes += netIf.InBytes
+		outTotalBytes += netIf.OutBytes
+	}
+	ret[cnt*20+0] = CounterValue("net.if.in.bytes", inTotalBytes, "iface=eth_all")
+	ret[cnt*20+1] = CounterValue("net.if.out.bytes", outTotalBytes, "iface=eth_all")
+	log.Println(inTotalBytes)
+
 	return ret
 }
