@@ -1,11 +1,10 @@
 package cron
 
 import (
+	"github.com/cepave/agent/funcs"
+	"github.com/cepave/agent/g"
+	"github.com/cepave/common/model"
 	"time"
-
-	"github.com/open-falcon/agent/funcs"
-	"github.com/open-falcon/agent/g"
-	"github.com/open-falcon/common/model"
 )
 
 func InitDataHistory() {

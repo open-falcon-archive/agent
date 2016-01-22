@@ -10,9 +10,9 @@ It is a golang classic project
 
 ```bash
 # set $GOPATH and $GOROOT
-mkdir -p $GOPATH/src/github.com/open-falcon
-cd $GOPATH/src/github.com/open-falcon
-git clone https://github.com/open-falcon/agent.git
+mkdir -p $GOPATH/src/github.com/cepave
+cd $GOPATH/src/github.com/cepave
+git clone https://github.com/cepave/agent.git
 cd agent
 go get ./...
 ./control build

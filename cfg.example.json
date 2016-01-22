@@ -5,7 +5,7 @@
     "plugin": {
         "enabled": false,
         "dir": "./plugin",
-        "git": "https://github.com/open-falcon/plugin.git",
+        "git": "https://github.com/cepave/plugin.git",
         "logs": "./logs"
     },
     "heartbeat": {

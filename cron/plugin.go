@@ -1,9 +1,9 @@
 package cron
 
 import (
-	"github.com/open-falcon/agent/g"
-	"github.com/open-falcon/agent/plugins"
-	"github.com/open-falcon/common/model"
+	"github.com/cepave/agent/g"
+	"github.com/cepave/agent/plugins"
+	"github.com/cepave/common/model"
 	"log"
 	"strings"
 	"time"
