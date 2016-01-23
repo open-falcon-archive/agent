@@ -5,6 +5,7 @@ import (
 	"github.com/cepave/common/model"
 	"github.com/toolkits/nux"
 	"log"
+	"strings"
 )
 
 func NetMetrics() []*model.MetricValue {
@@ -49,8 +50,10 @@ func CoreNetMetrics(ifacePrefix []string) []*model.MetricValue {
 	inTotalBytes := int64(0)
 	outTotalBytes := int64(0)
 	for _, netIf := range netIfs {
-		inTotalBytes += netIf.InBytes
-		outTotalBytes += netIf.OutBytes
+		if strings.Contains(netIfs, "eth") {
+			inTotalBytes += netIf.InBytes
+			outTotalBytes += netIf.OutBytes
+		}
 	}
 	ret[cnt*20+0] = CounterValue("net.if.in.bytes", inTotalBytes, "iface=eth_all")
 	ret[cnt*20+1] = CounterValue("net.if.out.bytes", outTotalBytes, "iface=eth_all")
