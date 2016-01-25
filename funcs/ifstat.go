@@ -55,8 +55,11 @@ func CoreNetMetrics(ifacePrefix []string) []*model.MetricValue {
 			outTotalBits += netIf.OutBytes * 8
 		}
 	}
-	ret[cnt*20+0] = CounterValue("net.if.in.bits", inTotalBits, "iface=eth_all")
-	ret[cnt*20+1] = CounterValue("net.if.out.bits", outTotalBits, "iface=eth_all")
+
+	if cnt != 0 {
+		ret[cnt*20+0] = CounterValue("net.if.in.bits", inTotalBits, "iface=eth_all")
+		ret[cnt*20+1] = CounterValue("net.if.out.bits", outTotalBits, "iface=eth_all")
+	}
 
 	return ret
 }
