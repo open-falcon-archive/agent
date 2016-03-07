@@ -10,9 +10,9 @@ It is a golang classic project
 
 ```bash
 # set $GOPATH and $GOROOT
-mkdir -p $GOPATH/src/github.com/open-falcon
-cd $GOPATH/src/github.com/open-falcon
-git clone https://github.com/open-falcon/agent.git
+mkdir -p $GOPATH/src/github.com/cepave
+cd $GOPATH/src/github.com/cepave
+git clone https://github.com/cepave/agent.git
 cd agent
 go get ./...
 ./control build
@@ -32,4 +32,3 @@ I use [linux-dash](https://github.com/afaqurk/linux-dash) as the page theme.
 # Deployment
 
 http://ulricqin.com/project/ops-updater/
-

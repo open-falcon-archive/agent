@@ -3,8 +3,8 @@ package plugins
 import (
 	"bytes"
 	"encoding/json"
-	"github.com/open-falcon/agent/g"
-	"github.com/open-falcon/common/model"
+	"github.com/cepave/agent/g"
+	"github.com/cepave/common/model"
 	"github.com/toolkits/file"
 	"github.com/toolkits/sys"
 	"log"
@@ -109,6 +109,21 @@ func PluginRun(plugin *Plugin) {
 		log.Printf("[ERROR] json.Unmarshal stdout of %s fail. error:%s stdout: \n%s\n", fpath, err, stdout.String())
 		return
 	}
+
+
+    // fill in fields
+    sec := plugin.Cycle
+    now := time.Now().Unix()
+    hostname, err := g.Hostname()
+    if err != nil {
+        hostname = ""
+    }
+
+    for j := 0; j < len(metrics); j++ {
+        metrics[j].Step = int64(sec)
+        metrics[j].Endpoint = hostname
+        metrics[j].Timestamp = now
+    }
 
 	g.SendToTransfer(metrics)
 }

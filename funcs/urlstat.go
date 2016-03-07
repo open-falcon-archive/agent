@@ -7,8 +7,8 @@ import (
 	"log"
 	"strings"
 
-	"github.com/open-falcon/agent/g"
-	"github.com/open-falcon/common/model"
+	"github.com/cepave/agent/g"
+	"github.com/cepave/common/model"
 	"github.com/toolkits/file"
 	"github.com/toolkits/sys"
 )
