@@ -110,5 +110,11 @@ func PluginRun(plugin *Plugin) {
 		return
 	}
 
+	err = g.MetricFilter(&metrics)
+	if err != nil {
+		log.Printf("[ERROR] Filter Metric stdout of %s fail. error:%s stdout: \n%s\n", fpath, err, stdout.String())
+		return
+	}
+
 	g.SendToTransfer(metrics)
 }

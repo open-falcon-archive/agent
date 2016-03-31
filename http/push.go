@@ -22,6 +22,12 @@ func configPushRoutes() {
 			return
 		}
 
+		err = g.MetricFilter(&metrics)
+		if err != nil {
+			http.Error(w, "Filter Metric failed", http.StatusBadRequest)
+			return
+		}
+
 		g.SendToTransfer(metrics)
 		w.Write([]byte("success"))
 	})

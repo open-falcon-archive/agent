@@ -1,10 +1,12 @@
 package cron
 
 import (
+	"log"
+	"time"
+
 	"github.com/open-falcon/agent/funcs"
 	"github.com/open-falcon/agent/g"
 	"github.com/open-falcon/common/model"
-	"time"
 )
 
 func InitDataHistory() {
@@ -41,7 +43,7 @@ func collect(sec int64, fns []func() []*model.MetricValue) {
 		}
 
 		mvs := []*model.MetricValue{}
-		ignoreMetrics := g.Config().IgnoreMetrics
+		debug := g.Config().Debug
 
 		for _, fn := range fns {
 			items := fn()
@@ -53,23 +55,23 @@ func collect(sec int64, fns []func() []*model.MetricValue) {
 				continue
 			}
 
-			for _, mv := range items {
-				if b, ok := ignoreMetrics[mv.Metric]; ok && b {
-					continue
-				} else {
-					mvs = append(mvs, mv)
-				}
+			if debug {
+				log.Println(" -> collect ", len(items), " metrics\n")
 			}
+			mvs = append(mvs, items...)
 		}
 
-		now := time.Now().Unix()
-		for j := 0; j < len(mvs); j++ {
-			mvs[j].Step = sec
-			mvs[j].Endpoint = hostname
-			mvs[j].Timestamp = now
-		}
+		err = g.MetricFilter(&mvs)
+		if err == nil {
+			now := time.Now().Unix()
+			for j := 0; j < len(mvs); j++ {
+				mvs[j].Step = sec
+				mvs[j].Endpoint = hostname
+				mvs[j].Timestamp = now
+			}
 
-		g.SendToTransfer(mvs)
+			g.SendToTransfer(mvs)
+		}
 
 	}
 }

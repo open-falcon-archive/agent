@@ -40,15 +40,17 @@ type CollectorConfig struct {
 }
 
 type GlobalConfig struct {
-	Debug         bool             `json:"debug"`
-	Hostname      string           `json:"hostname"`
-	IP            string           `json:"ip"`
-	Plugin        *PluginConfig    `json:"plugin"`
-	Heartbeat     *HeartbeatConfig `json:"heartbeat"`
-	Transfer      *TransferConfig  `json:"transfer"`
-	Http          *HttpConfig      `json:"http"`
-	Collector     *CollectorConfig `json:"collector"`
-	IgnoreMetrics map[string]bool  `json:"ignore"`
+	Debug                 bool              `json:"debug"`
+	Hostname              string            `json:"hostname"`
+	DefaultTags           map[string]string `json:"defaultTags"`
+	IP                    string            `json:"ip"`
+	Plugin                *PluginConfig     `json:"plugin"`
+	Heartbeat             *HeartbeatConfig  `json:"heartbeat"`
+	Transfer              *TransferConfig   `json:"transfer"`
+	Http                  *HttpConfig       `json:"http"`
+	Collector             *CollectorConfig  `json:"collector"`
+	IgnoreMetrics         map[string]bool   `json:"ignore"`
+	IgnoreMetricsWithTags map[string]string `json:"ignoreTags"`
 }
 
 var (
