@@ -1,7 +1,7 @@
 package http
 
 import (
-	"github.com/open-falcon/agent/g"
+	"github.com/coraldane/agent/g"
 	"github.com/toolkits/sys"
 	"io/ioutil"
 	"net/http"
