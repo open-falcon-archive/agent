@@ -8,6 +8,10 @@
         "git": "https://github.com/open-falcon/plugin.git",
         "logs": "./logs"
     },
+    "defaultTags":{
+      "level":"instance",
+      "product":"leancloud"
+    },
     "heartbeat": {
         "enabled": true,
         "addr": "127.0.0.1:6030",
