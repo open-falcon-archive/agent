@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"log"
 	"os"
+	"regexp"
 	"sync"
 
 	"github.com/toolkits/file"
@@ -41,17 +42,16 @@ type CollectorConfig struct {
 }
 
 type GlobalConfig struct {
-	Debug                 bool              `json:"debug"`
-	Hostname              string            `json:"hostname"`
-	DefaultTags           map[string]string `json:"defaultTags"`
-	IP                    string            `json:"ip"`
-	Plugin                *PluginConfig     `json:"plugin"`
-	Heartbeat             *HeartbeatConfig  `json:"heartbeat"`
-	Transfer              *TransferConfig   `json:"transfer"`
-	Http                  *HttpConfig       `json:"http"`
-	Collector             *CollectorConfig  `json:"collector"`
-	IgnoreMetrics         map[string]bool   `json:"ignore"`
-	IgnoreMetricsWithTags map[string]string `json:"ignoreTags"`
+	Debug     bool              `json:"debug"`
+	Hostname  string            `json:"hostname"`
+	IP        string            `json:"ip"`
+	Plugin    *PluginConfig     `json:"plugin"`
+	Heartbeat *HeartbeatConfig  `json:"heartbeat"`
+	Transfer  *TransferConfig   `json:"transfer"`
+	Http      *HttpConfig       `json:"http"`
+	Collector *CollectorConfig  `json:"collector"`
+	Ignore    map[string]string `json:"ignore"`
+	AddTags   map[string]string `json:"addTags"`
 }
 
 var (
@@ -113,6 +113,11 @@ func ParseConfig(cfg string) {
 	err = json.Unmarshal([]byte(configContent), &c)
 	if err != nil {
 		log.Fatalln("parse config file:", cfg, "fail:", err)
+	}
+
+	for k, v := range c.Ignore {
+		regexp.MustCompile(k)
+		regexp.MustCompile(v)
 	}
 
 	lock.Lock()

@@ -61,17 +61,15 @@ func collect(sec int64, fns []func() []*model.MetricValue) {
 			mvs = append(mvs, items...)
 		}
 
-		err = g.MetricFilter(&mvs)
-		if err == nil {
-			now := time.Now().Unix()
-			for j := 0; j < len(mvs); j++ {
-				mvs[j].Step = sec
-				mvs[j].Endpoint = hostname
-				mvs[j].Timestamp = now
-			}
+		filtered := *g.FilterMetrics(&mvs)
 
-			g.SendToTransfer(mvs)
+		now := time.Now().Unix()
+		for j := 0; j < len(filtered); j++ {
+			filtered[j].Step = sec
+			filtered[j].Endpoint = hostname
+			filtered[j].Timestamp = now
 		}
 
+		g.SendToTransfer(filtered)
 	}
 }
