@@ -29,6 +29,7 @@ func DeviceMetrics() (L []*model.MetricValue) {
 		diskTotal += du.BlocksAll
 		diskUsed += du.BlocksUsed
 
+		// these tags are not sorted by "key"
 		tags := fmt.Sprintf("mount=%s,fstype=%s", du.FsFile, du.FsVfstype)
 		L = append(L, GaugeValue("df.bytes.total", du.BlocksAll, tags))
 		L = append(L, GaugeValue("df.bytes.used", du.BlocksUsed, tags))
