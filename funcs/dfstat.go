@@ -16,9 +16,13 @@ func DeviceMetrics() (L []*model.MetricValue) {
 		return
 	}
 
-	myMountPoints := make(map[string]bool)
-	for _, mp := range g.Config().Collector.MountPoints {
-		myMountPoints[mp] = true
+	var myMountPoints map[string]bool = nil
+
+	if len(g.Config().Collector.MountPoints) > 0 {
+		myMountPoints = make(map[string]bool)
+		for _, mp := range g.Config().Collector.MountPoints {
+			myMountPoints[mp] = true
+		}
 	}
 
 	var diskTotal uint64 = 0
@@ -26,8 +30,11 @@ func DeviceMetrics() (L []*model.MetricValue) {
 
 	for idx := range mountPoints {
 		fsSpec, fsFile, fsVfstype := mountPoints[idx][0], mountPoints[idx][1], mountPoints[idx][2]
-		if _, ok := myMountPoints[fsFile]; !ok {
-			continue
+
+		if myMountPoints != nil {
+			if _, ok := myMountPoints[fsFile]; !ok {
+				continue
+			}
 		}
 
 		var du *nux.DeviceUsage
