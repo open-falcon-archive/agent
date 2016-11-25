@@ -3,8 +3,8 @@ package cron
 import (
 	"time"
 
-	"github.com/open-falcon/agent/funcs"
-	"github.com/open-falcon/agent/g"
+	"github.com/coraldane/agent/funcs"
+	"github.com/coraldane/agent/g"
 	"github.com/open-falcon/common/model"
 )
 
