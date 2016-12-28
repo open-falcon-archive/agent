@@ -44,8 +44,9 @@ var (
 func InitRpcClients() {
 	if Config().Heartbeat.Enabled {
 		HbsClient = &SingleConnRpcClient{
-			RpcServer: Config().Heartbeat.Addr,
-			Timeout:   time.Duration(Config().Heartbeat.Timeout) * time.Millisecond,
+			RpcServer:   Config().Heartbeat.Addr,
+			Timeout:     time.Duration(Config().Heartbeat.Timeout) * time.Millisecond,
+			WaitTimeout: time.Duration(Config().Heartbeat.WaitTimeout) * time.Millisecond,
 		}
 	}
 }
