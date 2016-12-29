@@ -32,7 +32,6 @@ func getTransferClient(addr string)(client *SingleConnRpcClient, ok bool){
 	defer TransferClientsLock.RUnlock()
 	client, ok = TransferClients[addr]
 	return client, ok
-
 }
 
 func initTransferClient(addr string) {
