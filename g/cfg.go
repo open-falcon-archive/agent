@@ -16,6 +16,16 @@ type PluginConfig struct {
 	LogDir  string `json:"logs"`
 }
 
+type AutoUpdateConfig struct {
+	Enabled  bool   `json:"enabled"`
+	Dir      string `json:"dir"`
+	Url      string `json:"url"`
+	Tar      string `json:"tar"`
+	Interval int    `json:"interval"`
+	RandInt  int    `json:"randInt"`
+	Timeout  int    `json:"timeout"`
+}
+
 type HeartbeatConfig struct {
 	Enabled  bool   `json:"enabled"`
 	Addr     string `json:"addr"`
@@ -41,15 +51,17 @@ type CollectorConfig struct {
 }
 
 type GlobalConfig struct {
-	Debug         bool             `json:"debug"`
-	Hostname      string           `json:"hostname"`
-	IP            string           `json:"ip"`
-	Plugin        *PluginConfig    `json:"plugin"`
-	Heartbeat     *HeartbeatConfig `json:"heartbeat"`
-	Transfer      *TransferConfig  `json:"transfer"`
-	Http          *HttpConfig      `json:"http"`
-	Collector     *CollectorConfig `json:"collector"`
-	IgnoreMetrics map[string]bool  `json:"ignore"`
+	Debug         bool              `json:"debug"`
+	Hostname      string            `json:"hostname"`
+	IP            string            `json:"ip"`
+	PidFile       string            `json:"pidfile"`
+	Plugin        *PluginConfig     `json:"plugin"`
+	AutoUpdate    *AutoUpdateConfig `json:"autoupdate"`
+	Heartbeat     *HeartbeatConfig  `json:"heartbeat"`
+	Transfer      *TransferConfig   `json:"transfer"`
+	Http          *HttpConfig       `json:"http"`
+	Collector     *CollectorConfig  `json:"collector"`
+	IgnoreMetrics map[string]bool   `json:"ignore"`
 }
 
 var (
