@@ -17,9 +17,9 @@ func LoadAvgMetrics() []*model.MetricValue {
 	cpuNum := float64(runtime.NumCPU())
 	var load1minPercent, load5minPercent, load15minPercent float64
 	if cpuNum != 0{
-		load1minPercent = load.Avg1min / cpuNum
-		load5minPercent = load.Avg5min / cpuNum
-		load15minPercent = load.Avg15min / cpuNum
+		load1minPercent = load.Avg1min * 100 / cpuNum
+		load5minPercent = load.Avg5min * 100/ cpuNum
+		load15minPercent = load.Avg15min * 100/ cpuNum
 	}
 	return []*model.MetricValue{
 		GaugeValue("load.1min.percent", load1minPercent),
