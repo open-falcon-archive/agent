@@ -22,6 +22,9 @@ func reportAgentStatus(interval time.Duration) {
 			hostname = fmt.Sprintf("error:%s", err.Error())
 		}
 
+		if g.IP() == ""{
+			g.InitLocalIp()
+		}
 		req := model.AgentReportRequest{
 			Hostname:      hostname,
 			IP:            g.IP(),

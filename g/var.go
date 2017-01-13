@@ -28,13 +28,13 @@ func InitLocalIp() {
 	if Config().Heartbeat.Enabled {
 		conn, err := net.DialTimeout("tcp", Config().Heartbeat.Addr, time.Second*1)
 		if err != nil {
-			log.Fatalln("get local addr failed,please check if you can ping success to hbs")
+			log.Println("get local addr failed,please check if you can ping success to hbs")
 		} else {
 			LocalIp = strings.Split(conn.LocalAddr().String(), ":")[0]
 			conn.Close()
 		}
 	} else {
-		log.Fatalln("hearbeat is not enabled, can't get localip")
+		log.Println("hearbeat is not enabled, can't get localip")
 	}
 }
 
