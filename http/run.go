@@ -1,11 +1,11 @@
 package http
 
 import (
-	"io/ioutil"
-	"net/http"
-
 	"github.com/open-falcon/agent/g"
 	"github.com/toolkits/sys"
+
+	"io/ioutil"
+	"net/http"
 )
 
 func configRunRoutes() {

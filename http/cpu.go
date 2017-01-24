@@ -2,11 +2,11 @@ package http
 
 import (
 	"fmt"
-	"net/http"
-	"runtime"
-
 	"github.com/open-falcon/agent/funcs"
 	"github.com/toolkits/nux"
+
+	"net/http"
+	"runtime"
 )
 
 func configCpuRoutes() {

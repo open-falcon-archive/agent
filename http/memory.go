@@ -1,9 +1,8 @@
 package http
 
 import (
-	"net/http"
-
 	"github.com/toolkits/nux"
+	"net/http"
 )
 
 func configMemoryRoutes() {

@@ -1,13 +1,13 @@
 package http
 
 import (
-	"fmt"
-	"net/http"
-	"os/exec"
-
 	"github.com/open-falcon/agent/g"
 	"github.com/open-falcon/agent/plugins"
 	"github.com/toolkits/file"
+
+	"net/http"
+	"os/exec"
+	"fmt"
 )
 
 func configPluginRoutes() {

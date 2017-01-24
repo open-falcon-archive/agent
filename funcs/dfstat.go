@@ -1,11 +1,12 @@
 package funcs
 
 import (
-	"fmt"
-	"log"
 
 	"github.com/open-falcon/common/model"
 	"github.com/toolkits/nux"
+
+	"log"
+	"fmt"
 )
 
 func DeviceMetrics() (L []*model.MetricValue) {

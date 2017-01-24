@@ -1,10 +1,9 @@
 package funcs
 
 import (
-	"log"
-
 	"github.com/open-falcon/common/model"
 	"github.com/toolkits/nux"
+	"log"
 	"runtime"
 )
 

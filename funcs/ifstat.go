@@ -1,11 +1,12 @@
 package funcs
 
 import (
-	"log"
 
 	"github.com/open-falcon/agent/g"
 	"github.com/open-falcon/common/model"
 	"github.com/toolkits/nux"
+
+	"log"
 )
 
 func NetMetrics() []*model.MetricValue {

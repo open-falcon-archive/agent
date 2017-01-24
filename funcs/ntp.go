@@ -5,13 +5,13 @@
 package funcs
 
 import (
+	"github.com/open-falcon/common/model"
+
 	"bytes"
 	"log"
 	"os/exec"
 	"strconv"
 	"strings"
-
-	"github.com/open-falcon/common/model"
 )
 
 func NtpMetrics() []*model.MetricValue {

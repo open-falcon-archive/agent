@@ -1,11 +1,10 @@
 package cron
 
 import (
-	"log"
-	"time"
-
 	"github.com/open-falcon/agent/g"
 	"github.com/open-falcon/common/model"
+	"log"
+	"time"
 )
 
 func SyncTrustableIps() {

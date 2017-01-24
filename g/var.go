@@ -2,14 +2,14 @@ package g
 
 import (
 	"log"
-	"net"
+	"github.com/open-falcon/common/model"
+	"github.com/toolkits/slice"
+
 	"os"
 	"strings"
 	"sync"
 	"time"
-
-	"github.com/open-falcon/common/model"
-	"github.com/toolkits/slice"
+	"net"
 )
 
 var Root string

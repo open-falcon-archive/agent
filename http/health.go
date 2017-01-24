@@ -1,9 +1,9 @@
 package http
 
 import (
-	"net/http"
-
 	"github.com/open-falcon/agent/g"
+
+	"net/http"
 )
 
 func configHealthRoutes() {

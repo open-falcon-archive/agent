@@ -3,10 +3,10 @@ package g
 import (
 	"bytes"
 	"fmt"
+	"github.com/toolkits/file"
+
 	"os/exec"
 	"strings"
-
-	"github.com/toolkits/file"
 )
 
 func GetCurrPluginVersion() string {

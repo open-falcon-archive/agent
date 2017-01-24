@@ -1,11 +1,12 @@
 package g
 
 import (
+	"github.com/open-falcon/common/model"
+
 	"log"
 	"math/rand"
 	"sync"
 	"time"
-	"github.com/open-falcon/common/model"
 )
 
 var (
@@ -17,13 +18,21 @@ func SendMetrics(metrics []*model.MetricValue, resp *model.TransferResponse) {
 	rand.Seed(time.Now().UnixNano())
 	for _, i := range rand.Perm(len(Config().Transfer.Addrs)) {
 		addr := Config().Transfer.Addrs[i]
-		if _, ok := TransferClients[addr]; !ok {
+
+		if _, ok := getTransferClient(addr); !ok {
 			initTransferClient(addr)
 		}
 		if updateMetrics(addr, metrics, resp) {
 			break
 		}
 	}
+}
+
+func getTransferClient(addr string)(client *SingleConnRpcClient, ok bool){
+	TransferClientsLock.RLock()
+	defer TransferClientsLock.RUnlock()
+	client, ok = TransferClients[addr]
+	return client, ok
 }
 
 func initTransferClient(addr string) {

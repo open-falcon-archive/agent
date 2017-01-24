@@ -1,11 +1,11 @@
 package http
 
 import (
-	"net/http"
-
 	"github.com/open-falcon/agent/g"
 	"github.com/toolkits/nux"
 	"github.com/toolkits/sys"
+
+	"net/http"
 )
 
 func configKernelRoutes() {

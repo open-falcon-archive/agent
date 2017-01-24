@@ -1,13 +1,12 @@
 package cron
 
 import (
-	"log"
-	"strings"
-	"time"
-
 	"github.com/open-falcon/agent/g"
 	"github.com/open-falcon/agent/plugins"
 	"github.com/open-falcon/common/model"
+	"log"
+	"strings"
+	"time"
 )
 
 func SyncMinePlugins() {

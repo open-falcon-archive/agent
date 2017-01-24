@@ -1,13 +1,13 @@
 package funcs
 
 import (
-	"fmt"
-	"log"
-
 	"github.com/open-falcon/agent/g"
 	"github.com/open-falcon/common/model"
 	"github.com/toolkits/nux"
 	"github.com/toolkits/slice"
+
+	"log"
+	"fmt"
 )
 
 func PortMetrics() (L []*model.MetricValue) {

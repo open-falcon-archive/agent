@@ -3,15 +3,15 @@ package plugins
 import (
 	"bytes"
 	"encoding/json"
-	"log"
-	"os/exec"
-	"path/filepath"
-	"time"
-
 	"github.com/open-falcon/agent/g"
 	"github.com/open-falcon/common/model"
 	"github.com/toolkits/file"
 	"github.com/toolkits/sys"
+
+	"log"
+	"os/exec"
+	"path/filepath"
+	"time"
 )
 
 type PluginScheduler struct {

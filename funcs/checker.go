@@ -2,7 +2,6 @@ package funcs
 
 import (
 	"fmt"
-
 	"github.com/toolkits/nux"
 	"github.com/toolkits/sys"
 )

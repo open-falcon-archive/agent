@@ -1,12 +1,12 @@
 package http
 
 import (
-	"encoding/json"
+	"github.com/open-falcon/agent/g"
+
 	"log"
 	"net/http"
 	_ "net/http/pprof"
-
-	"github.com/open-falcon/agent/g"
+	"encoding/json"
 )
 
 type Dto struct {
