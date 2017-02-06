@@ -2,6 +2,7 @@ package http
 
 import (
 	"github.com/open-falcon/agent/g"
+
 	"net/http"
 )
 

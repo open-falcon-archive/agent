@@ -1,12 +1,13 @@
 package funcs
 
 import (
-	"fmt"
 	"github.com/open-falcon/common/model"
 	"github.com/toolkits/nux"
+
 	"log"
 	"strings"
 	"sync"
+	"fmt"
 )
 
 var (

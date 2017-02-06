@@ -3,6 +3,7 @@ package http
 import (
 	"github.com/open-falcon/agent/g"
 	"github.com/toolkits/file"
+
 	"net/http"
 	"os"
 	"time"
