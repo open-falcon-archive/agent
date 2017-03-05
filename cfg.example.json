@@ -2,11 +2,21 @@
     "debug": true,
     "hostname": "",
     "ip": "",
+    "pidfile":"./var/app.pid",
     "plugin": {
         "enabled": false,
         "dir": "./plugin",
         "git": "https://github.com/open-falcon/plugin.git",
         "logs": "./logs"
+    },
+    "autoupdate":{
+        "enabled": false,
+        "dir":"./agent",
+        "url":"http://127.0.0.1",
+        "tar":"falcon-agent_%s.tar.gz",
+        "interval":60,
+        "randInt":300,
+        "timeout":1000
     },
     "heartbeat": {
         "enabled": true,

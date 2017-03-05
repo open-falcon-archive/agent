@@ -40,6 +40,7 @@ func main() {
 
 	cron.ReportAgentStatus()
 	cron.SyncMinePlugins()
+	cron.SyncMineAgentVersion()
 	cron.SyncBuiltinMetrics()
 	cron.SyncTrustableIps()
 	cron.Collect()
