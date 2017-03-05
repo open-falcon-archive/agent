@@ -38,6 +38,7 @@ type HttpConfig struct {
 
 type CollectorConfig struct {
 	IfacePrefix []string `json:"ifacePrefix"`
+	MountPoints []string `json:"mountPoints"`
 }
 
 type GlobalConfig struct {
