@@ -78,6 +78,7 @@ func syncBuiltinMetrics() {
 				} else {
 					log.Println("metric ParseInt timeout failed:", err)
 				}
+				continue
 			}
 
 			if metric.Metric == g.NET_PORT_LISTEN {
