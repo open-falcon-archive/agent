@@ -114,5 +114,6 @@ func PluginRun(plugin *Plugin) {
 		return
 	}
 
-	g.SendToTransfer(metrics)
+	filtered := *g.FilterMetrics(&metrics)
+	g.SendToTransfer(filtered)
 }

@@ -22,7 +22,8 @@ func configPushRoutes() {
 			return
 		}
 
-		g.SendToTransfer(metrics)
+		filtered := *g.FilterMetrics(&metrics)
+		g.SendToTransfer(filtered)
 		w.Write([]byte("success"))
 	})
 }
