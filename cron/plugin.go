@@ -7,6 +7,10 @@ import (
 	"log"
 	"strings"
 	"time"
+	"github.com/toolkits/file"
+	"os/exec"
+	"fmt"
+	"errors"
 )
 
 func SyncMinePlugins() {
@@ -21,7 +25,9 @@ func SyncMinePlugins() {
 	if g.Config().Heartbeat.Addr == "" {
 		return
 	}
-
+	if err := UpdatePlugin(); err != nil {
+		log.Fatalln(err.Error())
+	}
 	go syncMinePlugins()
 }
 
@@ -81,4 +87,32 @@ func syncMinePlugins() {
 		plugins.AddNewPlugins(desiredAll)
 
 	}
+}
+//如果插件启用,则用git地址下载插件
+func UpdatePlugin() error {
+	if !g.Config().Plugin.Enabled {
+		return nil
+	}
+	dir := g.Config().Plugin.Dir
+	parentDir := file.Dir(dir)
+	file.InsureDir(parentDir)
+
+	if file.IsExist(dir) {
+		// git pull
+		cmd := exec.Command("git", "pull")
+		cmd.Dir = dir
+		err := cmd.Run()
+		if err != nil {
+			return errors.New(fmt.Sprintf("git pull in dir:%s fail. error: %s", dir, err))
+		}
+	} else {
+		// git clone
+		cmd := exec.Command("git", "clone", g.Config().Plugin.Git, file.Basename(dir))
+		cmd.Dir = parentDir
+		err := cmd.Run()
+		if err != nil {
+			return errors.New((fmt.Sprintf("git clone plugin url:%s into dir:%s fail. error: %s", g.Config().Plugin.Git, dir, err)))
+		}
+	}
+	return nil
 }

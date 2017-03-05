@@ -7,6 +7,7 @@ import (
 	"github.com/toolkits/file"
 	"net/http"
 	"os/exec"
+	"github.com/open-falcon/agent/cron"
 )
 
 func configPluginRoutes() {
@@ -15,31 +16,10 @@ func configPluginRoutes() {
 			w.Write([]byte("plugin not enabled"))
 			return
 		}
-
-		dir := g.Config().Plugin.Dir
-		parentDir := file.Dir(dir)
-		file.InsureDir(parentDir)
-
-		if file.IsExist(dir) {
-			// git pull
-			cmd := exec.Command("git", "pull")
-			cmd.Dir = dir
-			err := cmd.Run()
-			if err != nil {
-				w.Write([]byte(fmt.Sprintf("git pull in dir:%s fail. error: %s", dir, err)))
-				return
-			}
-		} else {
-			// git clone
-			cmd := exec.Command("git", "clone", g.Config().Plugin.Git, file.Basename(dir))
-			cmd.Dir = parentDir
-			err := cmd.Run()
-			if err != nil {
-				w.Write([]byte(fmt.Sprintf("git clone in dir:%s fail. error: %s", parentDir, err)))
-				return
-			}
+		if err := cron.UpdatePlugin(); err != nil {
+			w.Write([]byte(err.Error()))
+			return
 		}
-
 		w.Write([]byte("success"))
 	})
 
