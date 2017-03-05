@@ -1,14 +1,14 @@
 package g
 
 import (
+	"github.com/open-falcon/common/model"
+	"github.com/toolkits/slice"
 	"log"
+	"net"
 	"os"
 	"strings"
 	"sync"
 	"time"
-        "net"
-	"github.com/open-falcon/common/model"
-	"github.com/toolkits/slice"
 )
 
 var Root string
@@ -24,15 +24,15 @@ func InitRootDir() {
 var LocalIp string
 
 func InitLocalIp() {
-        if Config().Heartbeat.Enabled {
-		conn, err := net.DialTimeout("tcp",Config().Heartbeat.Addr,time.Second*10)
+	if Config().Heartbeat.Enabled {
+		conn, err := net.DialTimeout("tcp", Config().Heartbeat.Addr, time.Second*10)
 		if err != nil {
 			log.Println("get local addr failed !")
-		}else{
-			LocalIp = strings.Split(conn.LocalAddr().String(),":")[0]
+		} else {
+			LocalIp = strings.Split(conn.LocalAddr().String(), ":")[0]
 			conn.Close()
 		}
-	}else{
+	} else {
 		log.Println("hearbeat is not enabled, can't get localip")
 	}
 }
@@ -44,8 +44,9 @@ var (
 func InitRpcClients() {
 	if Config().Heartbeat.Enabled {
 		HbsClient = &SingleConnRpcClient{
-			RpcServer: Config().Heartbeat.Addr,
-			Timeout:   time.Duration(Config().Heartbeat.Timeout) * time.Millisecond,
+			RpcServer:   Config().Heartbeat.Addr,
+			Timeout:     time.Duration(Config().Heartbeat.Timeout) * time.Millisecond,
+			WaitTimeout: time.Duration(Config().Heartbeat.WaitTimeout) * time.Millisecond,
 		}
 	}
 }
@@ -120,21 +121,39 @@ func SetDuPaths(paths []string) {
 	duPaths = paths
 }
 
+type CacheProc struct {
+	Pids    map[int]struct{}
+	Name    string
+	Cmdline string
+}
+
 var (
 	// tags => {1=>name, 2=>cmdline}
 	// e.g. 'name=falcon-agent'=>{1=>falcon-agent}
 	// e.g. 'cmdline=xx'=>{2=>xx}
-	reportProcs     map[string]map[int]string
+	reportProcs     map[string]*CacheProc
 	reportProcsLock = new(sync.RWMutex)
 )
 
-func ReportProcs() map[string]map[int]string {
+func GetProc(tag string) *CacheProc {
+	reportProcsLock.RLock()
+	defer reportProcsLock.RUnlock()
+	if proc, ok := reportProcs[tag]; ok {
+		return proc
+	}
+	pids := map[int]struct{}{
+		-1: struct{}{},
+	}
+	return &CacheProc{Pids: pids}
+}
+
+func ReportProcs() map[string]*CacheProc {
 	reportProcsLock.RLock()
 	defer reportProcsLock.RUnlock()
 	return reportProcs
 }
 
-func SetReportProcs(procs map[string]map[int]string) {
+func SetReportProcs(procs map[string]*CacheProc) {
 	reportProcsLock.Lock()
 	defer reportProcsLock.Unlock()
 	reportProcs = procs

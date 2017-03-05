@@ -12,7 +12,8 @@
         "enabled": true,
         "addr": "127.0.0.1:6030",
         "interval": 60,
-        "timeout": 1000
+        "timeout": 1000,
+        "waitTimeout": 5000
     },
     "transfer": {
         "enabled": true,
@@ -21,7 +22,8 @@
             "127.0.0.1:8433"
         ],
         "interval": 60,
-        "timeout": 1000
+        "timeout": 1000,
+        "waitTimeout": 5000
     },
     "http": {
         "enabled": true,

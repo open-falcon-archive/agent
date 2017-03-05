@@ -22,17 +22,19 @@ func SendMetrics(metrics []*model.MetricValue, resp *model.TransferResponse) {
 			initTransferClient(addr)
 		}
 		if updateMetrics(addr, metrics, resp) {
-			break
+			return
 		}
 	}
+	log.Printf("[ERROR] send metrics to transfer FAILED.retry time [%d]", len(Config().Transfer.Addrs))
 }
 
 func initTransferClient(addr string) {
 	TransferClientsLock.Lock()
 	defer TransferClientsLock.Unlock()
 	TransferClients[addr] = &SingleConnRpcClient{
-		RpcServer: addr,
-		Timeout:   time.Duration(Config().Transfer.Timeout) * time.Millisecond,
+		RpcServer:   addr,
+		Timeout:     time.Duration(Config().Transfer.Timeout) * time.Millisecond,
+		WaitTimeout: time.Duration(Config().Transfer.WaitTimeout) * time.Millisecond,
 	}
 }
 
