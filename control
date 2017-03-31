@@ -48,15 +48,14 @@ function start() {
 }
 
 function stop() {
-    pid=`cat $pidfile`
-    pid1=`ps -ef | grep "falcon-agent -c cfg.json" | grep -v grep| awk '{print $2}'`
-    if [ $pid = $pid1 ]; then 
-        kill $pid
+    pid=`ps -ef | grep "falcon-agent -c cfg.json" | grep -v grep| awk '{print $2}'`
+    kill $pid
+    pid=`ps -ef | grep "falcon-agent -c cfg.json" | grep -v grep| awk '{print $2}'| wc -l`
+    if [ $pid = 0 ]; then
         rm -f $pidfile
         echo "$app stoped success..."
-    else
-        echo "stop fail ..."
-        exit 1
+    else 
+       echo "$app stoped fail..."
     fi 
 }
 
