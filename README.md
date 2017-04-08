@@ -16,6 +16,7 @@ git clone https://github.com/open-falcon/agent.git
 cd agent
 go get ./...
 ./control build
+cp cfg.example.json cfg.json
 ./control start
 
 # goto http://localhost:1988
