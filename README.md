@@ -32,4 +32,3 @@ I use [linux-dash](https://github.com/afaqurk/linux-dash) as the page theme.
 # Deployment
 
 http://ulricqin.com/project/ops-updater/
-
