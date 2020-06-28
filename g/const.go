@@ -10,6 +10,8 @@ import (
 // 5.0.0: 支持通过配置控制是否开启/run接口；收集udp流量数据；du某个目录的大小
 // 5.1.0: 同步插件的时候不再使用checksum机制
 // 5.1.1: 支持采集单个进程占用的系统资源信息
+// 5.1.1: 修复往多个transfer发送数据的时候crash的问题
+
 const (
 	VERSION          = "5.1.1"
 	COLLECT_INTERVAL = time.Second

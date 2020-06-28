@@ -1,14 +1,14 @@
 package g
 
 import (
-	"github.com/open-falcon/common/model"
-	"github.com/toolkits/net"
-	"github.com/toolkits/slice"
 	"log"
 	"os"
 	"strings"
 	"sync"
 	"time"
+        "net"
+	"github.com/open-falcon/common/model"
+	"github.com/toolkits/slice"
 )
 
 var Root string
@@ -21,19 +21,24 @@ func InitRootDir() {
 	}
 }
 
-var LocalIps []string
+var LocalIp string
 
-func InitLocalIps() {
-	var err error
-	LocalIps, err = net.IntranetIP()
-	if err != nil {
-		log.Fatalln("get intranet ip fail:", err)
+func InitLocalIp() {
+        if Config().Heartbeat.Enabled {
+		conn, err := net.DialTimeout("tcp",Config().Heartbeat.Addr,time.Second*10)
+		if err != nil {
+			log.Println("get local addr failed !")
+		}else{
+			LocalIp = strings.Split(conn.LocalAddr().String(),":")[0]
+			conn.Close()
+		}
+	}else{
+		log.Println("hearbeat is not enabled, can't get localip")
 	}
 }
 
 var (
-	HbsClient      *SingleConnRpcClient
-	TransferClient *SingleConnRpcClient
+	HbsClient *SingleConnRpcClient
 )
 
 func InitRpcClients() {
@@ -41,13 +46,6 @@ func InitRpcClients() {
 		HbsClient = &SingleConnRpcClient{
 			RpcServer: Config().Heartbeat.Addr,
 			Timeout:   time.Duration(Config().Heartbeat.Timeout) * time.Millisecond,
-		}
-	}
-
-	if Config().Transfer.Enabled {
-		TransferClient = &SingleConnRpcClient{
-			RpcServer: Config().Transfer.Addr,
-			Timeout:   time.Duration(Config().Transfer.Timeout) * time.Millisecond,
 		}
 	}
 }
@@ -64,10 +62,7 @@ func SendToTransfer(metrics []*model.MetricValue) {
 	}
 
 	var resp model.TransferResponse
-	err := TransferClient.Call("Transfer.Update", metrics, &resp)
-	if err != nil {
-		log.Println("call Transfer.Update fail", err)
-	}
+	SendMetrics(metrics, &resp)
 
 	if debug {
 		log.Println("<=", &resp)

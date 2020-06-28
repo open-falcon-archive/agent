@@ -3,14 +3,17 @@ package plugins
 import (
 	"bytes"
 	"encoding/json"
-	"github.com/open-falcon/agent/g"
-	"github.com/open-falcon/common/model"
-	"github.com/toolkits/file"
-	"github.com/toolkits/sys"
 	"log"
 	"os/exec"
 	"path/filepath"
+	"syscall"
 	"time"
+
+	"github.com/toolkits/file"
+	"github.com/toolkits/sys"
+
+	"github.com/open-falcon/agent/g"
+	"github.com/open-falcon/common/model"
 )
 
 type PluginScheduler struct {
@@ -64,6 +67,7 @@ func PluginRun(plugin *Plugin) {
 	cmd.Stdout = &stdout
 	var stderr bytes.Buffer
 	cmd.Stderr = &stderr
+	cmd.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	cmd.Start()
 
 	err, isTimeout := sys.CmdRunWithTimeout(cmd, time.Duration(timeout)*time.Millisecond)
